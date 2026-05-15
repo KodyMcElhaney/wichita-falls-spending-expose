@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
 
 st.set_page_config(page_title="Wichita Falls Spending Exposé", layout="wide")
 
@@ -45,24 +44,14 @@ with tab1:
 with tab2:
     st.header("Visual Charts")
     
-    # Bar chart
-    fig_bar = px.bar(
-        df,
-        x="Category",
-        y="Increase",
-        text="Increase",
-        title="Spending Increase by Category (2022 → 2026)",
-        color="Category"
-    )
-    st.plotly_chart(fig_bar, use_container_width=True)
+    # Bar chart (built-in)
+    st.subheader("Spending Increase by Category")
+    chart_data = df.set_index("Category")["Increase"]
+    st.bar_chart(chart_data, use_container_width=True)
     
-    # Pie chart
-    fig_pie = px.pie(
-        df,
-        names="Category",
-        values="April 2026",
-        title="2026 Spending Breakdown"
-    )
-    st.plotly_chart(fig_pie, use_container_width=True)
+    # Pie chart (built-in)
+    st.subheader("2026 Spending Breakdown")
+    pie_data = df.set_index("Category")["April 2026"]
+    st.pyplot(pie_data.plot.pie(autopct='%1.1f%%', figsize=(8, 8)).figure)
 
 st.caption("Wichita Falls Spending Exposé • Live Dashboard")

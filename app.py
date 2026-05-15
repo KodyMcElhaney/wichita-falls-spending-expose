@@ -11,7 +11,6 @@ tab1, tab2 = st.tabs(["📊 Data Table", "📈 Charts"])
 with tab1:
     st.header("Spending Trends: April 2022 vs April 2026")
     
-    # Sample data (we'll load real check-register data later)
     data = {
         "Category": ["Utilities", "Retirement & Benefits", "Water Infrastructure", "Contracted Services", "Communications"],
         "April 2022": [2_500_000, 450_000, 500_000, 300_000, 200_000],
@@ -22,7 +21,7 @@ with tab1:
     df["Increase"] = df["April 2026"] - df["April 2022"]
     df["% Change"] = ((df["April 2026"] - df["April 2022"]) / df["April 2022"] * 100).round(1)
     
-    # Format money columns nicely
+    # Format money nicely
     for col in ["April 2022", "April 2026", "Increase"]:
         df[col] = df[col].apply(lambda x: f"${x:,.0f}")
     
@@ -44,14 +43,12 @@ with tab1:
 with tab2:
     st.header("Visual Charts")
     
-    # Bar chart (built-in)
     st.subheader("Spending Increase by Category")
-    chart_data = df.set_index("Category")["Increase"]
-    st.bar_chart(chart_data, use_container_width=True)
+    increase_chart = df.set_index("Category")["Increase"]
+    st.bar_chart(increase_chart, use_container_width=True)
     
-    # Pie chart (built-in)
     st.subheader("2026 Spending Breakdown")
-    pie_data = df.set_index("Category")["April 2026"]
-    st.pyplot(pie_data.plot.pie(autopct='%1.1f%%', figsize=(8, 8)).figure)
+    spending_chart = df.set_index("Category")["April 2026"]
+    st.bar_chart(spending_chart, use_container_width=True)
 
 st.caption("Wichita Falls Spending Exposé • Live Dashboard")

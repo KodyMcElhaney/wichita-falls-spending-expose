@@ -21,4 +21,4 @@ st.dataframe(df, use_container_width=True, hide_index=True)
 st.subheader("Total Spending Increase")
 st.metric("From 2022 to 2026", "$4.8M → $7.2M", "+50%")
 
-st.info("📍 This is a demo dashboard. Real data will be added once check registers are uploaded.")
+st.info("📍 This is a demo dashboard. Real data will be added

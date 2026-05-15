@@ -1,52 +1,36 @@
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 
 st.set_page_config(page_title="Wichita Falls Spending Exposé", layout="wide")
 
 st.title("🛡️ Wichita Falls Government Spending Exposé")
-st.markdown("**Citizen-led transparency • Tracking where your tax dollars go**")
+st.markdown("**Tracking where your tax dollars are going**")
 
-st.header("Spending Trends: April 2022 vs April 2026")
+tab1, tab2 = st.tabs( )
 
-# Sample data (we'll replace with real data later)
-data = {
-    "Category": [
-        "Utilities", 
-        "Retirement & Benefits", 
-        "Water Infrastructure", 
-        "Contracted Services", 
-        "Communications"
-    ],
-    "April 2022": [2500000, 450000, 500000, 300000, 200000],
-    "April 2026": [3400000, 892000, 674000, 512000, 386000]
-}
+with tab1:
+    st.header("Spending Trends: 2022 vs 2026")
+    
+    data = {
+        "Category": ["Utilities", "Retirement", "Water", "Contracted Services", "Communications"],
+        "2022": [2500000, 450000, 500000, 300000, 200000],
+        "2026": [3400000, 892000, 674000, 512000, 386000 "2026" "2022" "2026" "2022"]) / df["2022" "2022", "2026", "Increase"]:
+        df = df .apply(lambda x: f"${x:,.0f}")
+    
+    st.dataframe(df, use_container_width=True, hide_index=True)
+    
+    col1, col2, col3 = st.columns(3)
+    col1.metric("2022 Total", "$4.8M")
+    col2.metric("2026 Total", "$7.2M")
+    col3.metric("Increase", "+50%")
 
-df = pd.DataFrame(data)
+with tab2:
+    st.header("Visual Charts")
+    fig = px.bar(df, x="Category", y="Increase", title="Spending Increase by Category", text="Increase")
+    st.plotly_chart(fig, use_container_width=True)
+    
+    fig2 = px.pie(df, names="Category", values="2026", title="2026 Spending Breakdown")
+    st.plotly_chart(fig2, use_container_width=True)
 
-# Calculate increase
-df["Increase"] = df["April 2026"] - df["April 2022"]
-df["% Change"] = ((df["April 2026"] - df["April 2022"]) / df["April 2022"] * 100).round(1)
-
-# Format money columns nicely
-for col in ["April 2022", "April 2026", "Increase"]:
-    df[col] = df[col].apply(lambda x: f"${x:,.0f}")
-
-st.dataframe(
-    df,
-    use_container_width=True,
-    hide_index=True,
-    column_config={
-        "Category": st.column_config.TextColumn("Category"),
-        "% Change": st.column_config.NumberColumn("% Change", format="%.1f%%")
-    }
-)
-
-st.subheader("Overall Change")
-col1, col2, col3 = st.columns(3)
-col1.metric("April 2022 Total", "$4.80M")
-col2.metric("April 2026 Total", "$7.20M", "↑ $2.40M")
-col3.metric("4-Year Increase", "50%")
-
-st.info("📍 This dashboard uses sample data for demonstration. Real monthly check register data will be loaded soon.")
-
-st.caption("Wichita Falls Spending Exposé • Built for transparency")
+st.caption("Wichita Falls Spending Exposé • Live Dashboard")

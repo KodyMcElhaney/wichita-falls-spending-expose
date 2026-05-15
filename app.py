@@ -11,7 +11,7 @@ tab1, tab2 = st.tabs( )
 with tab1:
     st.header("Largest Payments - April 2026")
     
-    real_data = {
+    data = {
         "Vendor": [
             "Atmos Energy",
             "City of Wichita Falls Utilities",
@@ -25,7 +25,7 @@ with tab1:
         ]
     }
     
-    df = pd.DataFrame(real_data)
+    df = pd.DataFrame(data)
     df = df .apply(lambda x: f"${x:,.0f}")
     
     st.dataframe(df, use_container_width=True, hide_index=True)
@@ -34,12 +34,12 @@ with tab1:
     st.metric("Total", "$4,372,211")
 
 with tab2:
-    st.header("Overall Spending Increase")
+    st.header("Spending Overview")
     col1, col2, col3 = st.columns(3)
-    col1.metric("April 2022", "$4.8M")
-    col2.metric("April 2026", "$7.2M")
-    col3.metric("Increase", "+50%")
+    col1.metric("April 2022 Total", "$4.8M")
+    col2.metric("April 2026 Total", "$7.2M")
+    col3.metric("4-Year Increase", "50%")
     
-    st.info("📍 This is real vendor data from Wichita Falls check registers. More detailed monthly data coming soon.")
+    st.info("📍 Showing real vendor payments from Wichita Falls check registers.")
 
-st.caption("Wichita Falls Spending Exposé • patriotexpose.com")
+st.caption("Wichita Falls Spending Exposé • Powered by Real American")
